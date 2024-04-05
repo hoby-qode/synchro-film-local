@@ -1,0 +1,72 @@
+# Dossiers à ignorer
+node_modules/
+dist/
+coverage/
+.tmp/
+temp/
+logs/
+logs/*.log
+npm-debug.log*
+
+# Fichiers à ignorer
+.DS_Store
+.env
+.env.local
+.env.*.local
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.pem
+*.pid
+*.seed
+*.pid.lock
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.swp
+*.swo
+*.tlog
+*.tlog.lock
+*.log
+*.log.*
+logs/**.log
+*.tsbuildinfo
+
+# Fichiers générés par IDE
+.idea/
+.vscode/
+
+# Fichiers de configuration spécifiques à l'utilisateur
+/.tern-port
+/.eslintcache
+/.nyc_output
+/.vscode/
+
+# Fichiers de sauvegarde et fichiers temporaires
+*.bak
+*.backup
+*.swp
+*~.nib
+
+# Dossiers spécifiques à divers outils
+.npm/
+.jenkins/
+.eslintcache
+coverage/
+.pnpm
+node_modules/
+.pnp
+.pnp.js
+
+# Fichiers de journalisation
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Fichiers de build
+/build/
+/dist/
+/out/
