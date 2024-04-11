@@ -1,25 +1,24 @@
-
-
 const fs = require('fs')
 const axios = require('axios')
 const path = require('path')
+require('dotenv').config()
 
 // Clé d'API de TMDb
-const apiKey =
-  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzQzYmRhMTViZjgwNjU2MTEyZjQzMWVkYjFiY2M3NiIsInN1YiI6IjY1YTRmM2Q3OGEwZTliMDEyZWI0NjE3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZJc_GUl1LWfmJovPq51s3MiFuwsKAaQeGH6YXQSRjUI'
+const apiKey = process.env.API_KEY_TMBD
 
 // Fonction pour récupérer le résumé d'un film
 async function getMovieDetails(movieName) {
   const language = 'fr-FR'
   // Remplacer les points par des espaces
-  const cleanedMovieName = movieName.replace(/\./g, ' ').trim();
+  const cleanedMovieName = movieName.replace(/\./g, ' ').trim()
   // Supprimer l'année entre parenthèses ou le contenu entre parenthèses
-  const cleanedMovieNameWithoutYear = cleanedMovieName.replace(/\((\d{4})\)|\([^)]*\)/g, '').trim();
-//   const url = `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(
-//     cleanedMovieName,
-//   )}` 
-    console.log(cleanedMovieNameWithoutYear)
-  const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(cleanedMovieNameWithoutYear)}&language=${language}`;
+  const cleanedMovieNameWithoutYear = cleanedMovieName
+    .replace(/\((\d{4})\)|\([^)]*\)/g, '')
+    .trim()
+  console.log(cleanedMovieNameWithoutYear)
+  const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
+    cleanedMovieNameWithoutYear,
+  )}&language=${language}`
   const options = {
     headers: {
       accept: 'application/json',
@@ -31,8 +30,8 @@ async function getMovieDetails(movieName) {
     if (response.data.results.length > 0) {
       return response.data.results[0]
     } else {
-        console.log('Aucun résultat trouvé pour'+ "${movieName}"+'.');
-        return null;
+      console.log('Aucun résultat trouvé pour' + '${movieName}' + '.')
+      return null
     }
   } catch (error) {
     console.error('Erreur lors de la récupération du résumé:', error)
@@ -83,11 +82,16 @@ let successLog = ''
 let errorLog = ''
 
 // Chemin du dossier contenant vos films
-const folderPath = 'F:\\Film'
+const folderPath = 'I:\\FILMS\\FILMS'
 const videoFiles = getAllVideoFiles(folderPath)
 
 videoFiles.forEach(async (filePath) => {
   const movieName = path.basename(filePath, path.extname(filePath))
+  const posterPathLocal = filePath
+    .split('\\')
+    .slice(0, filePath.split('\\').length - 1)
+    .join('\\')
+  
   const movieDetails = await getMovieDetails(movieName)
   if (movieDetails) {
     console.log(movieDetails.id)
@@ -99,6 +103,14 @@ videoFiles.forEach(async (filePath) => {
         department: actor.department || '',
         job: actor.job || '',
       }))
+      // const posterPathLocal = () => {
+      //   console.log('')
+      //   let url = ''
+      //   // if() {
+
+      //   // }
+      //   return url
+      // }
       const detailsJSON = {
         title: movieDetails.title,
         overview: movieDetails.overview,
@@ -110,7 +122,9 @@ videoFiles.forEach(async (filePath) => {
         // pays_de_production: movieDetails.production_countries.map(country => country.name),
         director: movieDetails.director,
         actors: actors,
-        poster_path: `https://image.tmdb.org/t/p/original${movieDetails.poster_path}`,
+        poster_path: posterPathLocal()
+          ? posterPathLocal()
+          : `https://image.tmdb.org/t/p/original${movieDetails.poster_path}`,
         path_in_disk_dur: filePath,
       }
       const folderName = path.dirname(filePath)

@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-require('dotenv').config();
+require('dotenv').config()
 
-const directoryPath = 'I:\\FILMS'
-const outputFile = 'I:\\FILMS\\listFilms.txt'
+const directoryPath = 'K:\\DESSIN ANIME'
+const outputFile = 'J:\\PROJET WEB\\synchroLocalV2\\tests\\listDessinAnime.txt'
 
 function getAllMovieLists(directoryPath, outputFile) {
   try {

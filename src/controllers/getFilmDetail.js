@@ -1,10 +1,10 @@
 const fs = require('fs')
 const axios = require('axios')
 const path = require('path')
+require('dotenv').config()
 
 // Clé d'API de TMDb
-const apiKey =
-  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzQzYmRhMTViZjgwNjU2MTEyZjQzMWVkYjFiY2M3NiIsInN1YiI6IjY1YTRmM2Q3OGEwZTliMDEyZWI0NjE3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZJc_GUl1LWfmJovPq51s3MiFuwsKAaQeGH6YXQSRjUI'
+const apiKey = process.env.API_KEY_TMBD
 
 // Fonction pour récupérer le résumé d'un film
 async function getMovieDetails(movieName) {
